@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     var number: String = "";
     var advanceHistory = "";
     var finalAnswer = "";
+    var isValid = true;
     
     @IBOutlet weak var viewHistory: UILabel!
     @IBOutlet weak var historyButton: UIButton!
@@ -48,39 +49,18 @@ class ViewController: UIViewController {
             wholeEquation = calculator.push(value: number)
             
             //Check if input is in correct format, if not an alert is displayed
-            for start in 0...wholeEquation.count-1{
-                if(start % 2 == 0){
-                    let x = wholeEquation[start]
-                    if(x != "1" && x != "2" && x != "3" && x != "4" && x != "5" && x != "6" && x != "7" && x != "8" && x != "9"&&x != "0"){
-                        let errorMessage = UIAlertController(title: "Error", message: "Wrong input", preferredStyle: .alert)
-                        let okButton = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-                            print("Ok button tapped")
-                        })
-                        
-                        errorMessage.addAction(okButton)
-                        self.present(errorMessage, animated: true, completion: nil)
-                        
-                        wholeEquation = []
-                        calculator.stringNum = []
-                        break;
-                    }
-                }
-                else if(start % 2 != 0){
-                    let x = wholeEquation[start]
-                    if(x != "+" && x != "-" && x != "/" && x != "*" ){
-                        let errorMessage = UIAlertController(title: "Error", message: "Wrong input", preferredStyle: .alert)
-                        let okButton = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-                            print("Ok button tapped")
-                        })
-                        
-                        errorMessage.addAction(okButton)
-                        self.present(errorMessage, animated: true, completion: nil)
-                        
-                        wholeEquation = []
-                        calculator.stringNum = []
-                        break;
-                    }
-                }
+            isValid = calculator.isCalculatorValid(eqnArray: wholeEquation)
+            if isValid == false{
+                let errorMessage = UIAlertController(title: "Error", message: "Wrong input", preferredStyle: .alert)
+                let okButton = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+                    print("Ok button tapped")
+                })
+                
+                errorMessage.addAction(okButton)
+                self.present(errorMessage, animated: true, completion: nil)
+                
+                wholeEquation = []
+                calculator.stringNum = []
             }
             displayLabel.text = displayLabel.text! + " " + number
         }
