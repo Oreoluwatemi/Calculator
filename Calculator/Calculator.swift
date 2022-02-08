@@ -11,10 +11,6 @@ class Calculator{
     var stringNum : [String] = []
     var stringVal : String = ""
 
-//    init(stringNum : [String], stringVal: String){
-//        self.stringNum = stringNum;
-//        self.stringVal = stringVal
-//    }
     
     func push(value a : String) -> [String]{
         stringNum.append(a)
